@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="world_name" default="worlds/empty.world"/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+    <rosparam file="$(find robot_arm_grap)/config/controller.yaml" command="load"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(find robot_arm_grap)/urdf/chassis.urdf.xacro"/>
+
+        <!-- Spawn robot in gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" clear_params="true"
+          args="-z 0.5 -param robot_description -urdf -model car" output="screen"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="
+        controllers/joint_state_controller
+        controllers/chassis_base_controller
+"/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+</launch>

@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chassis">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.954 0.48 0.181"/>
+            </geometry>
+
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+
+            <material name="blue">
+                <color rgba="0 .5 .8 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.954 0.48 0.181"/>>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="46.034"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296"/>
+        </inertial>
+    </link>
+
+    <xacro:include filename="$(find rm_description)/urdf/common/realsense_l515.urdf.xacro"/>
+    <xacro:realsense_l515 connected_to="base_link" realsense_name="l515_1" simulation="true" xyz="0.477 0 0" rpy="0 0 0"/>
+
+    <link name="right_front_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411"/>
+        </inertial>
+    </link>
+
+
+    <link name="right_back_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411"/>
+        </inertial>
+    </link>
+
+
+    <link name="left_front_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411"/>
+        </inertial>
+    </link>
+
+
+    <link name="left_back_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <!--            <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>-->
+            <geometry>
+                <cylinder length="0.072" radius="0.1265"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="2"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.02467" iyz="0" izz="0.04411"/>
+        </inertial>
+    </link>
+
+    <joint name="back_left_joint" type="continuous">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="left_back_wheel"/>
+        <origin rpy="-1.57079 0 0" xyz="-0.35 0.2965 -0.059"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+    <joint name="front_right_joint" type="continuous">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="right_front_wheel"/>
+        <origin rpy="-1.57079 0 0" xyz="0.35 -0.2965 -0.059"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+    <joint name="back_right_joint" type="continuous">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="right_back_wheel"/>
+        <origin rpy="-1.57079 0 0" xyz="-0.35 -0.2965 -0.059"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+    <joint name="front_left_joint" type="continuous">
+        <axis xyz="0 0 1"/>
+        <parent link="base_link"/>
+        <child link="left_front_wheel"/>
+        <origin rpy="-1.57079 0 0" xyz="0.35 0.2965 -0.059"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
+
+    <gazebo reference="right_front_wheel">
+        <mu1 value="2.0"/>
+        <mu2 value="1.0"/>
+        <kp value="1000000.0"/>
+        <kd value="1.0"/>
+        <fdir1 value="1 0 0"/>
+    </gazebo>
+
+    <gazebo reference="right_back_wheel">
+        <mu1 value="2.0"/>
+        <mu2 value="1.0"/>
+        <kp value="1000000.0"/>
+        <kd value="1.0"/>
+        <fdir1 value="1 0 0"/>
+    </gazebo>
+
+    <gazebo reference="left_front_wheel">
+        <mu1 value="2.0"/>
+        <mu2 value="1.0"/>
+        <kp value="1000000.0"/>
+        <kd value="1.0"/>
+        <fdir1 value="1 0 0"/>
+    </gazebo>
+
+    <gazebo reference="left_back_wheel">
+        <mu1 value="2.0"/>
+        <mu2 value="1.0"/>
+        <kp value="1000000.0"/>
+        <kd value="1.0"/>
+        <fdir1 value="1 0 0"/>
+    </gazebo>
+
+    <transmission name="left_front_wheel_trans" type="SimpleTransmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="left_front_wheel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="front_left_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="right_front_wheel_trans" type="SimpleTransmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="right_front_wheel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="front_right_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="left_back_wheel_trans" type="SimpleTransmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="left_back_wheel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="back_left_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="right_back_wheel_trans" type="SimpleTransmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="right_back_wheel_motor">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="back_right_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+            <legacyModeNS>true</legacyModeNS>
+        </plugin>
+    </gazebo>
+</robot>

@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find find_object_2d)/launch/find_object_3d.launch">
+        <arg name="rgb_topic" value="l515_1/color/image_raw"/>
+        <arg name="depth_topic" value="l515_1/depth/image_rect_raw"/>
+        <arg name="camera_info_topic" value="l515_1/color/camera_info"/>
+    </include>
+</launch>
